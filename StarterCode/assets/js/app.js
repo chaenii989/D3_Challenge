@@ -126,24 +126,24 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([80, -60])
-    .style("color", "")
-    .style("background", '')
-    .style("border", "")
-    .style("border-width", "")
-    .style("border-radius", "")
-    .style("padding", "")
+    .style("color", "white")
+    .style("background", 'black')
+    .style("border", "4px solid black")
+    .style("border-width", "4px")
+    .style("border-radius", "12px")
+    .style("padding", "5px")
     .html(function (d) {
-      return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}%<br>${ylabel} ${d[chosenYAxis]}%`);
+      return (`<div>${d.state}<br>${xlabel} ${d[chosenXAxis]}%<br>${ylabel} ${d[chosenYAxis]}%</div>`);
     });
 
   circlesGroup.call(toolTip);
 
   circlesGroup.on("mouseover", function (data) {
-    toolTip.show(data);
+    toolTip.show(data,this);
   })
     // onmouseout event
     .on("mouseout", function (data, index) {
-      toolTip.hide(data);
+      toolTip.hide(data,this);
     });
 
   return circlesGroup;
@@ -368,7 +368,7 @@ d3.csv("./assets/data/data.csv").then(function (data, err) {
             .classed("active", false)
             .classed("inactive", true);
         }
-        else if (chosenXAxis === 'smokes') {
+        else if (chosenYAxis === 'smokes') {
           smokesLabel
             .classed("active", true)
             .classed("inactive", false);
